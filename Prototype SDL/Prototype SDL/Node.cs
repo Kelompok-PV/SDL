@@ -29,8 +29,6 @@ namespace Prototype_SDL
 
         public void addSubtree(Node newChild)
         {
-            //Console.WriteLine("add kebawah");
-            //Console.WriteLine(newChild.key);
             if(this.firstChild == null)
             {
                 this.firstChild = newChild;
@@ -86,11 +84,12 @@ namespace Prototype_SDL
                 draw(cetak.lastChild, x, y);
             }
 
-            if (cetak.next != null)
+            if (cetak.next != null&&cetak.parent==null)
             {
+                y = 0;
                 g.DrawLine(Pens.Black, x +50, y + 25, x + 100*cetak.next.order, y + 25);
                 x += 100 * cetak.next.order;
-                draw(cetak.next, x, 0);
+                draw(cetak.next, x, y);
             }
 
 

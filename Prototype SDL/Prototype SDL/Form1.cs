@@ -68,15 +68,18 @@ namespace Prototype_SDL
                     Node next_next_x = next_x.next;
                     x = mergeTree(x, next_x);
                     if (prev_x == null)
+                    {
                         firstRoot = x;
+                    }
                     else
+                    {
                         prev_x.next = x;
+                    }
                     x.next = next_next_x;
                     if (next_next_x != null)
                     {
                         next_next_x.prev = x;
                     }
-                    //todo
                 }
             }
             return firstRoot;

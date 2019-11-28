@@ -36,9 +36,9 @@
             // 
             // treePanel
             // 
-            this.treePanel.Location = new System.Drawing.Point(71, 12);
+            this.treePanel.Location = new System.Drawing.Point(12, 12);
             this.treePanel.Name = "treePanel";
-            this.treePanel.Size = new System.Drawing.Size(694, 371);
+            this.treePanel.Size = new System.Drawing.Size(1021, 371);
             this.treePanel.TabIndex = 0;
             this.treePanel.Paint += new System.Windows.Forms.PaintEventHandler(this.treePanel_Paint);
             // 
@@ -73,7 +73,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1062, 450);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.insertBtn);
             this.Controls.Add(this.insertTb);
