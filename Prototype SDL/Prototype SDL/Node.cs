@@ -47,9 +47,27 @@ namespace Prototype_SDL
 
             newChild.x = newChild.parent.x;
             newChild.y = newChild.parent.y + 100;
-        }
 
-        Font font = new Font("ARIAL",15,FontStyle.Regular);
+            while (firstChild.next!=null)
+            {
+                mergeTree(newChild, firstChild.next);
+            }
+        }
+        public void mergeTree(Node x, Node y)
+        {
+            if (x.key <= y.key)
+            {
+                x.addSubtree(y); //y becomes child of x
+                y.y += 100;
+            }
+            else
+            {
+                y.addSubtree(x); //x becomes child of y
+                x.y += 100;
+            }
+                
+        }
+            Font font = new Font("ARIAL",15,FontStyle.Regular);
         public void draw()
         {
             Graphics g = config.g;

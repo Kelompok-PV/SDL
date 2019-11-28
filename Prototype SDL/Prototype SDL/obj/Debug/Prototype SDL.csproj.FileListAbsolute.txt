@@ -7,3 +7,12 @@ C:\Users\yongki40\Desktop\Prototype SDL\Prototype SDL\obj\Debug\Prototype SDL.cs
 C:\Users\yongki40\Desktop\Prototype SDL\Prototype SDL\obj\Debug\Prototype SDL.exe
 C:\Users\yongki40\Desktop\Prototype SDL\Prototype SDL\obj\Debug\Prototype SDL.pdb
 C:\Users\yongki40\Desktop\Prototype SDL\Prototype SDL\obj\Debug\Prototype_SDL.Form1.resources
+C:\xampp\htdocs\SDL\Prototype SDL\Prototype SDL\bin\Debug\Prototype SDL.exe.config
+C:\xampp\htdocs\SDL\Prototype SDL\Prototype SDL\bin\Debug\Prototype SDL.exe
+C:\xampp\htdocs\SDL\Prototype SDL\Prototype SDL\bin\Debug\Prototype SDL.pdb
+C:\xampp\htdocs\SDL\Prototype SDL\Prototype SDL\obj\Debug\Prototype SDL.csprojAssemblyReference.cache
+C:\xampp\htdocs\SDL\Prototype SDL\Prototype SDL\obj\Debug\Prototype_SDL.Form1.resources
+C:\xampp\htdocs\SDL\Prototype SDL\Prototype SDL\obj\Debug\Prototype_SDL.Properties.Resources.resources
+C:\xampp\htdocs\SDL\Prototype SDL\Prototype SDL\obj\Debug\Prototype SDL.csproj.GenerateResource.cache
+C:\xampp\htdocs\SDL\Prototype SDL\Prototype SDL\obj\Debug\Prototype SDL.exe
+C:\xampp\htdocs\SDL\Prototype SDL\Prototype SDL\obj\Debug\Prototype SDL.pdb
