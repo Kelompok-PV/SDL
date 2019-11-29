@@ -12,16 +12,16 @@ namespace Prototype_SDL
         public int key { get; set; }
         public Node parent { get; set; }
         public Node next { get; set; }
+        public Node prev { get; set; }
         public Node lastChild { get; set; }
         public Node firstChild { get; set; }
         public int order { get; set; }
-        public int x { get; set; }
-        public int y { get; set; }
         public Node(int key)
         {
             this.key = key;
             this.parent = null;
             this.next = null;
+            this.prev = null;
             this.lastChild = null;
             this.firstChild = null;
             this.order = 0;
@@ -29,8 +29,6 @@ namespace Prototype_SDL
 
         public void addSubtree(Node newChild)
         {
-            Console.WriteLine("add kebawah");
-            Console.WriteLine(newChild.key);
             if(this.firstChild == null)
             {
                 this.firstChild = newChild;
@@ -38,51 +36,69 @@ namespace Prototype_SDL
             }
             else
             {
-                this.lastChild.next = newChild; 
+                this.lastChild.next = newChild;
+                newChild.prev = this.lastChild;
                 this.lastChild = newChild; 
             }
             newChild.parent = this;
             newChild.next = null;
             this.order = newChild.order + 1;
 
-            newChild.x = newChild.parent.x;
-            newChild.y = newChild.parent.y + 100;
 
-            while (firstChild.next!=null)
-            {
-                mergeTree(newChild, firstChild.next);
-            }
         }
         public void mergeTree(Node x, Node y)
         {
             if (x.key <= y.key)
             {
                 x.addSubtree(y); //y becomes child of x
-                y.y += 100;
             }
             else
             {
                 y.addSubtree(x); //x becomes child of y
-                x.y += 100;
             }
                 
         }
-            Font font = new Font("ARIAL",15,FontStyle.Regular);
-        public void draw()
+        Font font = new Font("ARIAL",15,FontStyle.Regular);
+        public void gambar(Node cetak,int x,int y)
         {
             Graphics g = config.g;
-            if(this.parent == null)
+            g.DrawString(cetak.key.ToString(), font, new SolidBrush(Color.Black), x+10, y+10);
+            g.DrawEllipse(Pens.Black, new Rectangle(x, y, 50, 50));
+        }
+        public void draw(Node pertama,int x,int y)
+        {
+            Node cetak = pertama;
+            Graphics g = config.g;
+            gambar(cetak,x,y);
+            if (cetak.firstChild != null)
             {
-                g.DrawEllipse(Pens.Black, new Rectangle(this.x, this.y, 50, 50));
-                g.DrawString(this.key.ToString(), font, new SolidBrush(Color.Black),x,y);
+                g.DrawLine(Pens.Black, x+25,y+50,x+25,y+100);
+                y += 100;
+                draw(cetak.firstChild, x, y); 
             }
-            else
-            {
-                g.DrawLine(Pens.Black, this.parent.x+25, this.parent.y+50,this.x+25,this.y);
-                g.DrawString(this.key.ToString(), font, new SolidBrush(Color.Black), x, y);
-                g.DrawEllipse(Pens.Black, new Rectangle(this.x,this.y, 50, 50));
-            }
+
             
+            if (cetak.next != null&&cetak.parent==null)
+            {
+                y = 0;
+                g.DrawLine(Pens.Black, x +50, y + 25, x + 100*cetak.next.order, y + 25);
+                x += 100 * cetak.next.order;
+                draw(cetak.next, x, y);
+            }
+            else if ((cetak.next != null && cetak.parent != null)&&(cetak.next.key != cetak.parent.key )&&(cetak.next.key != cetak.parent.lastChild.key ))
+            {
+                g.DrawLine(Pens.Black, x, y + 25, x - 50 , y + 25);
+                x -= 100;
+                draw(cetak.next, x, y);
+            }
+
+            if (cetak.lastChild != null && cetak.lastChild != cetak.firstChild)
+            {
+                g.DrawLine(Pens.Black, x + 25, y - 50, x - 70 * cetak.order, y);
+                x -= 80*cetak.order;
+                draw(cetak.lastChild, x, y);
+            }
+
         }
     }
 }

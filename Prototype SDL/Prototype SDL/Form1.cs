@@ -44,18 +44,14 @@ namespace Prototype_SDL
         {
             if (x == null)
             {
-                y.x = treePanel.Width / 2;
-                y.y = 20;
                 return y;
             }
             if (y == null)
             {
-                x.x = treePanel.Width / 2;
-                x.y = 20;
+                return x;
             }
 
             Node firstRoot = x = simpleMerge(x,y);
-            Node prev_x = null;
             while(x!=null && x.next != null)
             {
                 Node next_x = x.next;
@@ -64,20 +60,27 @@ namespace Prototype_SDL
                         && x.order == next_x.next.order))
                 { //case 2
                   //move ahead
-                    prev_x = x;
                     x = next_x;
                 }
                 else
                 {
+                    Node prev_x = x.prev;
                     Node next_next_x = next_x.next;
                     x = mergeTree(x, next_x);
                     if (prev_x == null)
+                    {
                         firstRoot = x;
+                    }
                     else
+                    {
                         prev_x.next = x;
+                    }
                     x.next = next_next_x;
+                    if (next_next_x != null)
+                    {
+                        next_next_x.prev = x;
+                    }
                 }
-
             }
             return firstRoot;
         }
@@ -88,8 +91,9 @@ namespace Prototype_SDL
             Node last = null;
             while(x !=null || y != null)
             {
-                if((x != null && y!=null) && (x.order <= y.order))
+                if (x!=null&&y==null)
                 {
+                    x.prev = last;
                     if (result == null)
                     {
                         result = x;
@@ -101,8 +105,9 @@ namespace Prototype_SDL
                     last = x;
                     x = x.next;
                 }
-                else
+                else if (x == null && y != null)
                 {
+                    y.prev = last;
                     if (result == null)
                     {
                         result = y;
@@ -113,7 +118,37 @@ namespace Prototype_SDL
                     }
                     last = y;
                     y = y.next;
-
+                }
+                else
+                {
+                    if (x.order <= y.order)
+                    {
+                        x.prev = last;
+                        if (result == null)
+                        {
+                            result = x;
+                        }
+                        else
+                        {
+                            last.next = x;
+                        }
+                        last = x;
+                        x = x.next; 
+                    }
+                    else
+                    {
+                        y.prev = last;
+                        if (result == null)
+                        {
+                            result = y;
+                        }
+                        else
+                        {
+                            last.next = y;
+                        }
+                        last = y;
+                        y = y.next;
+                    }
                 }
             }
             last.next = null;
@@ -129,7 +164,7 @@ namespace Prototype_SDL
             }
             else
             {
-                y.addSubtree(x);
+                y.addSubtree(x); 
                 return y;
             }
         }
@@ -140,6 +175,7 @@ namespace Prototype_SDL
             string last = "";
             string first = "";
             string next = "";
+            string prev = "";
             string parent = "";
 
             if (temp.lastChild == null)
@@ -168,7 +204,14 @@ namespace Prototype_SDL
             {
                 next = temp.next.key.ToString();
             }
-
+            if (temp.prev == null)
+            {
+                prev= "null";
+            }
+            else
+            {
+                prev = temp.prev.key.ToString();
+            }
             if (temp.parent == null)
             {
                 parent = "null";
@@ -183,8 +226,9 @@ namespace Prototype_SDL
                 "firstChild: {1},\n" +
                 "LastChild: {2},\n" +
                 "next: {3},\n" +
-                "order:{4},\n" +
-                "parent:{5}", temp.key, first, last, next, temp.order, parent));
+                "prev: {4},\n" +
+                "order:{5},\n" +
+                "parent:{6}", temp.key, first, last, next,prev, temp.order, parent));
             Console.WriteLine("=================\n");
 
         }
@@ -192,15 +236,21 @@ namespace Prototype_SDL
         private void treePanel_Paint(object sender, PaintEventArgs e)
         {
             config.g = e.Graphics;
-            if (binomialTree.root != null)
+            if (root != null)
             {
-                binomialTree.root.draw();
-                if (binomialTree.root.firstChild != null)
-                {
-                    binomialTree.root.firstChild.draw();
-                }
+                root.draw(root,root.order*150,0);
             }
             
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
