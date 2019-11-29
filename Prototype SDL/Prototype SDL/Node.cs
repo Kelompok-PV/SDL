@@ -77,13 +77,7 @@ namespace Prototype_SDL
                 draw(cetak.firstChild, x, y); 
             }
 
-            if (cetak.lastChild != null&&cetak.lastChild!=cetak.firstChild)
-            {
-                g.DrawLine(Pens.Black, x + 25, y - 50, x -75, y);
-                x -= 100;
-                draw(cetak.lastChild, x, y);
-            }
-
+            
             if (cetak.next != null&&cetak.parent==null)
             {
                 y = 0;
@@ -91,7 +85,19 @@ namespace Prototype_SDL
                 x += 100 * cetak.next.order;
                 draw(cetak.next, x, y);
             }
+            else if ((cetak.next != null && cetak.parent != null)&&(cetak.next.key != cetak.parent.key )&&(cetak.next.key != cetak.parent.lastChild.key ))
+            {
+                g.DrawLine(Pens.Black, x, y + 25, x - 50 , y + 25);
+                x -= 100;
+                draw(cetak.next, x, y);
+            }
 
+            if (cetak.lastChild != null && cetak.lastChild != cetak.firstChild)
+            {
+                g.DrawLine(Pens.Black, x + 25, y - 50, x - 70 * cetak.order, y);
+                x -= 80*cetak.order;
+                draw(cetak.lastChild, x, y);
+            }
 
         }
     }
