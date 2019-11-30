@@ -25,3 +25,13 @@ E:\GitHub\SDL\Prototype SDL\Prototype SDL\obj\Debug\Prototype_SDL.Properties.Res
 E:\GitHub\SDL\Prototype SDL\Prototype SDL\obj\Debug\Prototype SDL.csproj.GenerateResource.cache
 E:\GitHub\SDL\Prototype SDL\Prototype SDL\obj\Debug\Prototype SDL.exe
 E:\GitHub\SDL\Prototype SDL\Prototype SDL\obj\Debug\Prototype SDL.pdb
+C:\Users\Fendy\Documents\GitHub\SDL\Prototype SDL\Prototype SDL\bin\Debug\Prototype SDL.exe.config
+C:\Users\Fendy\Documents\GitHub\SDL\Prototype SDL\Prototype SDL\bin\Debug\Prototype SDL.exe
+C:\Users\Fendy\Documents\GitHub\SDL\Prototype SDL\Prototype SDL\bin\Debug\Prototype SDL.pdb
+C:\Users\Fendy\Documents\GitHub\SDL\Prototype SDL\Prototype SDL\obj\Debug\Prototype SDL.csprojAssemblyReference.cache
+C:\Users\Fendy\Documents\GitHub\SDL\Prototype SDL\Prototype SDL\obj\Debug\Prototype_SDL.Form1.resources
+C:\Users\Fendy\Documents\GitHub\SDL\Prototype SDL\Prototype SDL\obj\Debug\Prototype_SDL.Properties.Resources.resources
+C:\Users\Fendy\Documents\GitHub\SDL\Prototype SDL\Prototype SDL\obj\Debug\Prototype SDL.csproj.GenerateResource.cache
+C:\Users\Fendy\Documents\GitHub\SDL\Prototype SDL\Prototype SDL\obj\Debug\Prototype SDL.csproj.CoreCompileInputs.cache
+C:\Users\Fendy\Documents\GitHub\SDL\Prototype SDL\Prototype SDL\obj\Debug\Prototype SDL.exe
+C:\Users\Fendy\Documents\GitHub\SDL\Prototype SDL\Prototype SDL\obj\Debug\Prototype SDL.pdb
