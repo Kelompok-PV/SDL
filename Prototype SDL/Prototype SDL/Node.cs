@@ -59,17 +59,21 @@ namespace Prototype_SDL
                 
         }
         Font font = new Font("ARIAL",15,FontStyle.Regular);
+
+        //gambar node
         public void gambar(Node cetak,int x,int y)
         {
             Graphics g = config.g;
             g.DrawString(cetak.key.ToString(), font, new SolidBrush(Color.Black), x+10, y+10);
             g.DrawEllipse(Pens.Black, new Rectangle(x, y, 50, 50));
         }
+
+        //recursive panggil prosedure gambar dan menggambar line
         public void draw(Node pertama,int x,int y)
         {
             Node cetak = pertama;
             Graphics g = config.g;
-            gambar(cetak,x,y);
+            gambar(cetak,x,y); //gambar node
             if (cetak.firstChild != null)
             {
                 g.DrawLine(Pens.Black, x+25,y+50,x+25,y+100);
@@ -87,7 +91,7 @@ namespace Prototype_SDL
             }
             else if ((cetak.next != null && cetak.parent != null)&&(cetak.next.key != cetak.parent.key )&&(cetak.next.key != cetak.parent.lastChild.key ))
             {
-                g.DrawLine(Pens.Black, x, y + 25, x - 50 , y + 25);
+                g.DrawLine(Pens.Black, x, y - 50, x - 50 , y + 25);
                 x -= 100;
                 draw(cetak.next, x, y);
             }
@@ -95,7 +99,7 @@ namespace Prototype_SDL
             if (cetak.lastChild != null && cetak.lastChild != cetak.firstChild)
             {
                 g.DrawLine(Pens.Black, x + 25, y - 50, x - 70 * cetak.order, y);
-                x -= 80*cetak.order;
+                x -= 80 * cetak.order;
                 draw(cetak.lastChild, x, y);
             }
 

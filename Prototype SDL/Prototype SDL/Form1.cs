@@ -29,7 +29,7 @@ namespace Prototype_SDL
             int val = Convert.ToInt32(insertTb.Text);
             insert(ref root,val);
             binomialTree.root = root;
-            printConsole();
+            printConsole(val);
             treePanel.Invalidate();
             
         }
@@ -169,7 +169,7 @@ namespace Prototype_SDL
             }
         }
 
-        public void printConsole()
+        public void printConsole(int insertVal)
         {
             Node temp = binomialTree.root;
             string last = "";
@@ -177,6 +177,8 @@ namespace Prototype_SDL
             string next = "";
             string prev = "";
             string parent = "";
+
+            Console.WriteLine("Insert: "+insertVal);
 
             if (temp.lastChild == null)
             {

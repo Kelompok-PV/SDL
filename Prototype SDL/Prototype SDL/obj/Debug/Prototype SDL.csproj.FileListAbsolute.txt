@@ -16,3 +16,12 @@ C:\xampp\htdocs\SDL\Prototype SDL\Prototype SDL\obj\Debug\Prototype_SDL.Properti
 C:\xampp\htdocs\SDL\Prototype SDL\Prototype SDL\obj\Debug\Prototype SDL.csproj.GenerateResource.cache
 C:\xampp\htdocs\SDL\Prototype SDL\Prototype SDL\obj\Debug\Prototype SDL.exe
 C:\xampp\htdocs\SDL\Prototype SDL\Prototype SDL\obj\Debug\Prototype SDL.pdb
+E:\GitHub\SDL\Prototype SDL\Prototype SDL\bin\Debug\Prototype SDL.exe.config
+E:\GitHub\SDL\Prototype SDL\Prototype SDL\bin\Debug\Prototype SDL.exe
+E:\GitHub\SDL\Prototype SDL\Prototype SDL\bin\Debug\Prototype SDL.pdb
+E:\GitHub\SDL\Prototype SDL\Prototype SDL\obj\Debug\Prototype SDL.csprojAssemblyReference.cache
+E:\GitHub\SDL\Prototype SDL\Prototype SDL\obj\Debug\Prototype_SDL.Form1.resources
+E:\GitHub\SDL\Prototype SDL\Prototype SDL\obj\Debug\Prototype_SDL.Properties.Resources.resources
+E:\GitHub\SDL\Prototype SDL\Prototype SDL\obj\Debug\Prototype SDL.csproj.GenerateResource.cache
+E:\GitHub\SDL\Prototype SDL\Prototype SDL\obj\Debug\Prototype SDL.exe
+E:\GitHub\SDL\Prototype SDL\Prototype SDL\obj\Debug\Prototype SDL.pdb
