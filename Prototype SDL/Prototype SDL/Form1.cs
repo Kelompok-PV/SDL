@@ -89,12 +89,19 @@ namespace Prototype_SDL
             }
             if (firstRoot.prev != null)
             {
-                find(firstRoot, firstRoot.prev.key);
+                //find(firstRoot, firstRoot.prev.key);
+                if (firstRoot.prev.prev != null)
+                {
+                    if (firstRoot.lastChild == firstRoot.prev && (firstRoot.prev.prev == firstRoot.firstChild||firstRoot.prev.prev==firstRoot))
+                    {
+                        firstRoot.prev = null;
+                    }
+                }
             }
-            if (simpan != null)
-            {
-                firstRoot.prev = null;
-            }
+            //if (simpan != null)
+            //{
+            //    firstRoot.prev = null;
+            //}
             return firstRoot;
         }
 
