@@ -28,10 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.treePanel = new System.Windows.Forms.Panel();
             this.insertTb = new System.Windows.Forms.TextBox();
             this.insertBtn = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // treePanel
@@ -41,6 +43,10 @@
             this.treePanel.Size = new System.Drawing.Size(1021, 371);
             this.treePanel.TabIndex = 0;
             this.treePanel.Paint += new System.Windows.Forms.PaintEventHandler(this.treePanel_Paint);
+            this.treePanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.treePanel_MouseDown);
+            this.treePanel.MouseLeave += new System.EventHandler(this.treePanel_MouseLeave);
+            this.treePanel.MouseHover += new System.EventHandler(this.treePanel_MouseHover);
+            this.treePanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.treePanel_MouseUp);
             // 
             // insertTb
             // 
@@ -69,6 +75,11 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -92,6 +103,7 @@
         private System.Windows.Forms.TextBox insertTb;
         private System.Windows.Forms.Button insertBtn;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

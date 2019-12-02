@@ -67,19 +67,23 @@ namespace Prototype_SDL
                     Node prev_x = x.prev;
                     Node next_next_x = next_x.next;
                     x = mergeTree(x, next_x);
-                    if (prev_x == null)
+                    if (x.key<firstRoot.key)
                     {
                         firstRoot = x;
                     }
+                    if (prev_x == null)
+                    { 
+                        firstRoot = x;
+                    } 
                     else
-                    {
+                    { 
                         prev_x.next = x;
-                    }
+                    } 
                     x.next = next_next_x;
                     if (next_next_x != null)
-                    {
+                    { 
                         next_next_x.prev = x;
-                    }
+                    } 
                 }
             }
             return firstRoot;
@@ -240,7 +244,7 @@ namespace Prototype_SDL
             config.g = e.Graphics;
             if (root != null)
             {
-                root.draw(root,root.order*150,0);
+                root.draw(root,100+root.order*150+x_fix,0+y_fix);;
             }
             
         }
@@ -253,6 +257,54 @@ namespace Prototype_SDL
         private void button1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        int x_awal = 0;
+        int x_akhir = 0;
+        int x_jadi = 0;
+
+        int y_awal = 0;
+        int y_akhir = 0;
+        int y_jadi = 0;
+
+        int x_fix=0;
+        int y_fix = 0;
+
+        bool tekan = false;
+
+        private void treePanel_MouseDown(object sender, MouseEventArgs e)
+        {
+            tekan = true;
+            x_awal = e.Location.X;
+            y_awal = e.Location.Y;
+        }
+
+        private void treePanel_MouseUp(object sender, MouseEventArgs e)
+        {
+            tekan = false;
+            x_akhir = e.Location.X;
+            y_akhir = e.Location.Y;
+            x_fix += x_akhir - x_awal;
+            y_fix += y_akhir - y_awal;
+        }
+
+        private void treePanel_MouseLeave(object sender, EventArgs e)
+        {
+
+        }
+
+        private void treePanel_MouseHover(object sender, EventArgs e)
+        {
+            
+            if (tekan == true)
+            {
+
+            }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            //treePanel.Invalidate();
         }
     }
 }

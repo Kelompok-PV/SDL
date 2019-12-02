@@ -67,12 +67,25 @@ namespace Prototype_SDL
             g.DrawString(cetak.key.ToString(), font, new SolidBrush(Color.Black), x+10, y+10);
             g.DrawEllipse(Pens.Black, new Rectangle(x, y, 50, 50));
         }
-
+        public bool cekHistory(Node cetak,Node parent)
+        {
+            while (parent.parent != null)
+            {
+                parent=parent.parent;
+                if((cetak.next == parent) || (cetak.next == parent.lastChild))
+                {
+                    return false;
+                }
+                cekHistory(cetak, parent);
+            }
+            return true;
+        }
         //recursive panggil prosedure gambar dan menggambar line
         public void draw(Node pertama,int x,int y)
         {
             Node cetak = pertama;
             Graphics g = config.g;
+            //System.Windows.Forms.MessageBox.Show(cetak.key + "");
             gambar(cetak,x,y); //gambar node
             if (cetak.firstChild != null)
             {
@@ -80,8 +93,6 @@ namespace Prototype_SDL
                 y += 100;
                 draw(cetak.firstChild, x, y); 
             }
-
-            
             if (cetak.next != null&&cetak.parent==null)
             {
                 y = 0;
@@ -89,7 +100,7 @@ namespace Prototype_SDL
                 x += 100 * cetak.next.order;
                 draw(cetak.next, x, y);
             }
-            else if ((cetak.next != null && cetak.parent != null)&&(cetak.next.key != cetak.parent.key )&&(cetak.next.key != cetak.parent.lastChild.key ))
+            else if ((cetak.next != null && cetak.parent != null)&&cekHistory(cetak,cetak))
             {
                 g.DrawLine(Pens.Black, x, y - 50, x - 50 , y + 25);
                 x -= 100;
