@@ -249,6 +249,45 @@ namespace Prototype_SDL
             
         }
 
+        private Node getMin(Node root) { 
+            if (root == null) return null; 
+            Node minNode = root; 
+            Node current = root.next;
+            while (current != null) { 
+                if (current.key < minNode.key)
+                {
+                    minNode = current;
+                }
+                current = current.next; 
+            }
+            return minNode;
+        }
+        private Node extractMin(ref Node root)
+        {
+            if (root != null)
+            {
+                Node minRoot = getMin(root);//remove from the root list
+                remove(ref root, minRoot);//set parent to null for the children
+                setParentToNull(minRoot.firstChild);//merge the children with the root list
+                root = merge(root, minRoot.firstChild);
+                return minRoot;
+            }else
+                return null;
+        }
+
+        void remove(ref Node root, Node node) { 
+            if (node.prev == null) 
+                root = node.next; 
+            else
+                node.prev.next = node.next; 
+            if (node.next != null) 
+                node.next.prev = node.prev; 
+        }
+        void setParentToNull(Node node) { 
+            for (Node current = node; current != null; current = current.next) 
+                current.parent = null; 
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
 
@@ -256,55 +295,77 @@ namespace Prototype_SDL
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            extractMin(ref root);
         }
 
-        int x_awal = 0;
-        int x_akhir = 0;
-        int x_jadi = 0;
-
-        int y_awal = 0;
-        int y_akhir = 0;
-        int y_jadi = 0;
-
+        private void decreaseKey(Node node, int newKey) { 
+            node.key = newKey; 
+            heapifyUp(node); 
+        }
+        void heapifyUp(Node node)
+        {
+            while (node.parent != null && node.parent.key > node.key)
+            { //violated
+                swap(node, node.parent);
+                node = node.parent;
+            }
+        }
+        void swap(Node x, Node y) { 
+            int temp = x.key; 
+            x.key = y.key; 
+            y.key = temp; 
+        }
+        Node simpan = null;
+        private bool find(Node root,int angka)
+        {
+            Node cari = root;
+            if (cari.key == angka)
+            {
+                simpan = cari;
+                return true;
+            }
+            if (cari.firstChild != null)
+            {
+                find(cari.firstChild, angka);
+            }
+            if (cari.lastChild != null)
+            {
+                find(cari.lastChild, angka);
+            }
+            if (cari.next != null)
+            {
+                find(cari.next, angka);
+            }
+            return false;
+        }
+        public 
         int x_fix=0;
         int y_fix = 0;
 
-        bool tekan = false;
-
-        private void treePanel_MouseDown(object sender, MouseEventArgs e)
-        {
-            tekan = true;
-            x_awal = e.Location.X;
-            y_awal = e.Location.Y;
-        }
-
-        private void treePanel_MouseUp(object sender, MouseEventArgs e)
-        {
-            tekan = false;
-            x_akhir = e.Location.X;
-            y_akhir = e.Location.Y;
-            x_fix += x_akhir - x_awal;
-            y_fix += y_akhir - y_awal;
-        }
-
-        private void treePanel_MouseLeave(object sender, EventArgs e)
-        {
-
-        }
-
-        private void treePanel_MouseHover(object sender, EventArgs e)
-        {
-            
-            if (tekan == true)
-            {
-
-            }
-        }
-
         private void timer1_Tick(object sender, EventArgs e)
         {
-            //treePanel.Invalidate();
+            treePanel.Invalidate();
+        }
+
+        private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)
+        {
+            x_fix = hScrollBar1.Value-500;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            int angka1 = Convert.ToInt32(textBox1.Text);
+            int angka2 = Convert.ToInt32(textBox2.Text);
+            simpan = null;
+            find(root, angka1);
+            if (simpan != null)
+            {
+                decreaseKey(simpan, angka2);
+            }
+            else
+            {
+                MessageBox.Show("Key yang di Decrease tidak ada");
+            }
         }
     }
 }
