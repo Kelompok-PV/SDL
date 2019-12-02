@@ -27,6 +27,7 @@ namespace Prototype_SDL
         private void insertBtn_Click(object sender, EventArgs e)
         {
             int val = Convert.ToInt32(insertTb.Text);
+            simpan = null;
             insert(ref root,val);
             binomialTree.root = root;
             printConsole(val);
@@ -85,6 +86,14 @@ namespace Prototype_SDL
                         next_next_x.prev = x;
                     } 
                 }
+            }
+            if (firstRoot.prev != null)
+            {
+                find(firstRoot, firstRoot.prev.key);
+            }
+            if (simpan != null)
+            {
+                firstRoot.prev = null;
             }
             return firstRoot;
         }
@@ -296,6 +305,7 @@ namespace Prototype_SDL
         private void button1_Click(object sender, EventArgs e)
         {
             extractMin(ref root);
+            int a = 0;
         }
 
         private void decreaseKey(Node node, int newKey) { 
