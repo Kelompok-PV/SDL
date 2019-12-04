@@ -16,6 +16,8 @@ namespace Prototype_SDL
         public Node lastChild { get; set; }
         public Node firstChild { get; set; }
         public int order { get; set; }
+        public int x_parent { get; set; }
+        public int y_parent { get; set; }
         public Node(int key)
         {
             this.key = key;
@@ -80,37 +82,84 @@ namespace Prototype_SDL
             return true;
         }
         //recursive panggil prosedure gambar dan menggambar line
-        public void draw(Node pertama,int x,int y)
+        public void draw(Node pertama,int x,int y,int tamx)
         {
             Node cetak = pertama;
             Graphics g = config.g;
-            //System.Windows.Forms.MessageBox.Show(cetak.key + "");
+            int simpan_x = 0;
+            if (cetak.parent == null)
+            {
+                int simpan = cetak.order-1;
+                if(cetak.prev== null|| cetak.prev.parent == null)
+                {
+                    x = (int)(125 * Math.Pow(2,simpan))+tamx;
+                    if (simpan == 0)
+                    {
+                        x = 125 + tamx;
+                    }
+                    simpan_x = x;
+                    y = 0;
+                    cetak.x_parent = x;
+                }
+
+                if (x < 0|| cetak.order == 0)
+                {
+                    x = 0 + tamx;
+
+                    cetak.x_parent = x;
+                }
+            }
+            else
+            {
+                cetak.x_parent = x;
+                cetak.y_parent = y;
+            }
             gambar(cetak,x,y); //gambar node
             if (cetak.firstChild != null)
             {
                 g.DrawLine(Pens.Black, x+25,y+50,x+25,y+100);
-                y += 100;
-                draw(cetak.firstChild, x, y); 
+               
+                draw(cetak.firstChild, x, y+100,tamx); 
             }
             if (cetak.next != null&&cetak.parent==null)
             {
-                y = 0;
-                g.DrawLine(Pens.Black, x +50, y + 25, x + 100*cetak.next.order, y + 25);
-                x += 100 * cetak.next.order;
-                draw(cetak.next, x, y);
+                
+                g.DrawLine(Pens.Black, x +50, y + 25, x + simpan_x, y + 25);
+                x = x  + simpan_x;
+                draw(cetak.next, x , y, tamx);
+
+                x = x - simpan_x;
             }
             else if ((cetak.next != null && cetak.parent != null)&&cekHistory(cetak,cetak))
             {
-                g.DrawLine(Pens.Black, x, y - 50, x - 50 , y + 25);
-                x -= 100;
-                draw(cetak.next, x, y);
+                //System.Windows.Forms.MessageBox.Show(cetak.key+" "+cetak.order);
+                int kiri = (int)(125 * Math.Pow(2, cetak.order-2));
+                if (cetak.order <= 1)
+                {
+                    kiri = 50;
+                }
+                g.DrawLine(Pens.Black, cetak.parent.x_parent+25, y - 50, x  -kiri, y);
+                x = x - kiri;
+                draw(cetak.next, x-25, y, tamx);
+                x = x + kiri;
             }
 
             if (cetak.lastChild != null && cetak.lastChild != cetak.firstChild)
             {
-                g.DrawLine(Pens.Black, x + 25, y - 50, x - 70 * cetak.order, y);
-                x -= 80 * cetak.order;
-                draw(cetak.lastChild, x, y);
+                //System.Windows.Forms.MessageBox.Show(cetak.key+" ");
+                int kiri=(int)(125 * Math.Pow(2, cetak.order-3));
+                if (cetak.order == 2)
+                {
+                    kiri = 0;
+                }
+                if (cetak.order ==3)
+                {
+                    kiri = 75;
+                }
+                //System.Windows.Forms.MessageBox.Show(kiri+" "+x);
+                g.DrawLine(Pens.Black, x + 25, y + 50, x - 50-kiri, y+100);
+                x -= 50+kiri;
+                draw(cetak.lastChild, x - 25, y+100, tamx);
             }
 
         }

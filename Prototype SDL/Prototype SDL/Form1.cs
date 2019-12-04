@@ -136,7 +136,6 @@ namespace Prototype_SDL
                 {
                     prev = prev.prev;
                 }
-
                 findinHeap(firstRoot, prev);
 
                 if (findHeap == true)
@@ -148,12 +147,30 @@ namespace Prototype_SDL
             return firstRoot;
         }
         bool findHeap = false;
-        private bool findinHeap(Node Root,Node prev)
+
+        private bool hapusJejak(Node first,Node hapus)
         {
-            Node cari = root;
+            while (first.parent != null)
+            {
+                if (first.parent == hapus)
+                {
+                    return true;
+                }
+                first = first.parent;
+            }
+            if (first.parent == hapus)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool findinHeap(Node first,Node prev)
+        {
+            Node cari = first;
             if (cari != null)
             {
-                if (prev != null)
+                if (prev == null)
                 {
                     return false;
                 }
@@ -164,14 +181,22 @@ namespace Prototype_SDL
                 }
                 if (cari.firstChild != null)
                 {
+                    //MessageBox.Show(cari.key + " first");
                     findinHeap(cari.firstChild, prev);
                 }
                 if (cari.lastChild != null)
                 {
+                    //MessageBox.Show(cari.key + " last");
                     findinHeap(cari.lastChild, prev);
                 }
-                if (cari.next != null && cari.parent != null)
+
+                if (hapusJejak(cari, cari.next))
                 {
+                    cari.next = null;
+                }
+                if (cari.next !=  null && cari.parent != null)
+                {
+                    //MessageBox.Show(cari.key + " next");
                     findinHeap(cari.next, prev);
                 }
             }
@@ -315,7 +340,6 @@ namespace Prototype_SDL
             {
                 parent = temp.parent.key.ToString();
             }
-
             Console.WriteLine("=================");
             Console.WriteLine(string.Format("Root key: {0}\n" +
                 "firstChild: {1},\n" +
@@ -333,15 +357,15 @@ namespace Prototype_SDL
             config.g = e.Graphics;
             if (root != null)
             {
-                root.draw(root,root.order*150+x_fix,0);;
+                root.draw(root,0,0,x_fix);;
             }
             
         }
 
-        private Node getMin(Node root) { 
-            if (root == null) return null; 
-            Node minNode = root; 
-            Node current = root.next;
+        private Node getMin(Node first) { 
+            if (first == null) return null; 
+            Node minNode = first; 
+            Node current = first.next;
             while (current != null) { 
                 if (current.key < minNode.key)
                 {
@@ -351,15 +375,15 @@ namespace Prototype_SDL
             }
             return minNode;
         }
-        private Node extractMin(ref Node root)
+        private Node extractMin(ref Node first)
         {
-            if (root != null)
+            if (first != null)
             {
-                Node minRoot = getMin(root);//remove from the root list
-                remove(ref root, minRoot);//set parent to null for the children
+                Node minRoot = getMin(first);//remove from the root list
+                remove(ref first, minRoot);//set parent to null for the children
                 setParentToNull(minRoot.firstChild);//merge the children with the root list
-                root = merge(root, minRoot.firstChild);
-                hilangkanNext(root, minRoot);
+                first = merge(first, minRoot.firstChild);
+                hilangkanNext(first, minRoot);
 
                 return minRoot;
             }else
@@ -374,9 +398,9 @@ namespace Prototype_SDL
             }
         }
 
-        private void hilangkanNext( Node root, Node minRoot)
+        private void hilangkanNext( Node first, Node minRoot)
         {
-            Node hilang = root;
+            Node hilang = first;
             if (hilang!=null)
             {
                 if (hilang.next != minRoot)
@@ -404,41 +428,13 @@ namespace Prototype_SDL
                     hilang.prev = null;
                 }
 
-
-                //if (hilang == minRoot)
-                //{
-                //    Console.WriteLine("3");
-                //    if (hilang == minRoot.lastChild)
-                //    {
-                //        hilang.next = null;
-                //    }
-                //    else
-                //    {
-                //        hilang.next = minRoot.lastChild;
-                //        Console.WriteLine("5");
-                //    }
-                //}
-
-                //if (hilang.lastChild == null)
-                //{
-                //    Console.WriteLine("6");
-                //    hilang = root.next;
-                //    root = root.next;
-                //    hilangkanNext(hilang, minRoot);
-                //}
-                //else
-                //{
-                //    Console.WriteLine("7");
-                //    hilang = hilang.lastChild;
-                //    hilangkanNext(hilang, minRoot);
-                //}
             }
 
         }
 
-        void remove(ref Node root, Node node) { 
-            if (node.prev == null) 
-                root = node.next; 
+        void remove(ref Node first, Node node) { 
+            if (node.prev == null)
+                first = node.next; 
             else
                 node.prev.next = node.next; 
 
@@ -463,6 +459,7 @@ namespace Prototype_SDL
             {
                 printConsole(root.key);
             }
+            treePanel.Invalidate();
         }
 
         private void decreaseKey(Node node, int newKey) { 
@@ -483,9 +480,9 @@ namespace Prototype_SDL
             y.key = temp; 
         }
         Node simpan = null;
-        private bool find(Node root,int angka)
+        private bool find(Node first, int angka)
         {
-            Node cari = root;
+            Node cari = first;
             if (cari.key == angka)
             {
                 simpan = cari;
@@ -507,7 +504,6 @@ namespace Prototype_SDL
         }
         public 
         int x_fix=0;
-        int y_fix = 0;
 
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -516,7 +512,8 @@ namespace Prototype_SDL
 
         private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)
         {
-            x_fix = hScrollBar1.Value-500;
+            x_fix = hScrollBar1.Value-25000;
+            treePanel.Invalidate();
         }
 
         private void button2_Click(object sender, EventArgs e)
