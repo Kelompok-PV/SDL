@@ -44,7 +44,6 @@ namespace Prototype_SDL
             newChild.next = null;
             this.order = newChild.order + 1;
 
-
         }
         public void mergeTree(Node x, Node y)
         {

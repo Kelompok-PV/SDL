@@ -32,7 +32,8 @@ namespace Prototype_SDL
             binomialTree.root = root;
             printConsole(val);
             treePanel.Invalidate();
-            
+            int angka = Convert.ToInt32(insertTb.Text) + 1;
+            insertTb.Text=angka+"";
         }
 
         private void insert(ref Node root,int key)
@@ -87,22 +88,94 @@ namespace Prototype_SDL
                     } 
                 }
             }
-            if (firstRoot.prev != null)
-            {
-                //find(firstRoot, firstRoot.prev.key);
-                if (firstRoot.prev.prev != null)
-                {
-                    if (firstRoot.lastChild == firstRoot.prev && (firstRoot.prev.prev == firstRoot.firstChild||firstRoot.prev.prev==firstRoot))
-                    {
-                        firstRoot.prev = null;
-                    }
-                }
-            }
+            //if (firstRoot.order >1)
+            //{
+            //    int ctr = 0;
+            //    for (int i = 0; i < firstRoot.order; i++)
+            //    {
+            //        findHeap = false;
+            //        findinHeap(firstRoot, firstRoot.prev);
+            //        if (findHeap == true)
+            //        {
+            //            ctr++;
+            //        }
+            //        //if (findHeap == true)
+            //        //{
+            //        //    if (firstRoot.prev != null)
+            //        //    {
+            //        //        findHeap = false;
+            //        //        Node prev = firstRoot.prev;
+            //        //        findinHeap(firstRoot, prev);
+            //        //        if (prev.prev != null)
+            //        //        {
+            //        //            firstRoot.prev = prev.prev;
+            //        //        }
+            //        //        else
+            //        //        {
+            //        //            firstRoot.prev = null;
+            //        //        }
+            //        //    }
+            //        //}
+            //    }
+            //    if (ctr == firstRoot.order)
+            //    {
+            //        firstRoot.prev = null;
+            //    }
+            //}
             //if (simpan != null)
             //{
             //    firstRoot.prev = null;
             //}
+            //MessageBox.Show(firstRoot.key+"");
+            if (firstRoot.prev != null)
+            {
+                findHeap = false;
+                //MessageBox.Show(firstRoot.key+" "+firstRoot.prev.key);
+                Node prev = firstRoot;
+                for (int i = 0; i < firstRoot.order; i++)
+                {
+                    prev = prev.prev;
+                }
+
+                findinHeap(firstRoot, prev);
+
+                if (findHeap == true)
+                {
+                    firstRoot.prev = null;
+                }
+            }
+
             return firstRoot;
+        }
+        bool findHeap = false;
+        private bool findinHeap(Node Root,Node prev)
+        {
+            Node cari = root;
+            if (cari != null)
+            {
+                if (prev != null)
+                {
+                    return false;
+                }
+                if (cari == prev)
+                {
+                    findHeap = true;
+                    return false;
+                }
+                if (cari.firstChild != null)
+                {
+                    findinHeap(cari.firstChild, prev);
+                }
+                if (cari.lastChild != null)
+                {
+                    findinHeap(cari.lastChild, prev);
+                }
+                if (cari.next != null && cari.parent != null)
+                {
+                    findinHeap(cari.next, prev);
+                }
+            }
+            return false;
         }
 
         private Node simpleMerge(Node x,Node y)
@@ -260,7 +333,7 @@ namespace Prototype_SDL
             config.g = e.Graphics;
             if (root != null)
             {
-                root.draw(root,100+root.order*150+x_fix,0+y_fix);;
+                root.draw(root,root.order*150+x_fix,0);;
             }
             
         }
@@ -286,9 +359,81 @@ namespace Prototype_SDL
                 remove(ref root, minRoot);//set parent to null for the children
                 setParentToNull(minRoot.firstChild);//merge the children with the root list
                 root = merge(root, minRoot.firstChild);
+                hilangkanNext(root, minRoot);
+
                 return minRoot;
             }else
                 return null;
+        }
+
+        private void keParent(Node parent)
+        {
+            while (parent.parent!=null)
+            {
+                parent = parent.parent;
+            }
+        }
+
+        private void hilangkanNext( Node root, Node minRoot)
+        {
+            Node hilang = root;
+            if (hilang!=null)
+            {
+                if (hilang.next != minRoot)
+                {
+                    hilangkanNext( hilang.next, minRoot);
+                }
+                else
+                {
+                    hilang.next = null;
+                }
+
+                if (hilang.firstChild != null)
+                {
+                    hilangkanNext( hilang.firstChild, minRoot);
+                }
+
+                if (hilang.lastChild==null)
+                {
+                    keParent(hilang);
+                    hilangkanNext(hilang.next, minRoot);
+                }
+
+                if (hilang.prev == minRoot)
+                {
+                    hilang.prev = null;
+                }
+
+
+                //if (hilang == minRoot)
+                //{
+                //    Console.WriteLine("3");
+                //    if (hilang == minRoot.lastChild)
+                //    {
+                //        hilang.next = null;
+                //    }
+                //    else
+                //    {
+                //        hilang.next = minRoot.lastChild;
+                //        Console.WriteLine("5");
+                //    }
+                //}
+
+                //if (hilang.lastChild == null)
+                //{
+                //    Console.WriteLine("6");
+                //    hilang = root.next;
+                //    root = root.next;
+                //    hilangkanNext(hilang, minRoot);
+                //}
+                //else
+                //{
+                //    Console.WriteLine("7");
+                //    hilang = hilang.lastChild;
+                //    hilangkanNext(hilang, minRoot);
+                //}
+            }
+
         }
 
         void remove(ref Node root, Node node) { 
@@ -296,6 +441,7 @@ namespace Prototype_SDL
                 root = node.next; 
             else
                 node.prev.next = node.next; 
+
             if (node.next != null) 
                 node.next.prev = node.prev; 
         }
@@ -312,12 +458,16 @@ namespace Prototype_SDL
         private void button1_Click(object sender, EventArgs e)
         {
             extractMin(ref root);
-            int a = 0;
+            binomialTree.root = root;
+            if (root != null)
+            {
+                printConsole(root.key);
+            }
         }
 
         private void decreaseKey(Node node, int newKey) { 
-            node.key = newKey; 
-            heapifyUp(node); 
+            node.key = newKey;
+            heapifyUp(node);
         }
         void heapifyUp(Node node)
         {
