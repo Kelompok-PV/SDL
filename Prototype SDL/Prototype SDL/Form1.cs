@@ -23,9 +23,10 @@ namespace Prototype_SDL
             config.width = treePanel.Width;
             config.height = treePanel.Height;
         }
-
+        bool kiri = false;
         private void insertBtn_Click(object sender, EventArgs e)
         {
+            kiri = false;
             int val = Convert.ToInt32(insertTb.Text);
             simpan = null;
             insert(ref root,val);
@@ -132,7 +133,7 @@ namespace Prototype_SDL
                 findHeap = false;
                 //MessageBox.Show(firstRoot.key+" "+firstRoot.prev.key);
                 Node prev = firstRoot;
-                for (int i = 0; i < firstRoot.order; i++)
+                while(prev.prev!=firstRoot&&prev.prev!=null)
                 {
                     prev = prev.prev;
                 }
@@ -179,6 +180,17 @@ namespace Prototype_SDL
                     findHeap = true;
                     return false;
                 }
+
+                if (cari.parent == null && cari.order >= 2&&kiri==true)
+                {
+                    int ke = cari.order - 2;
+                    Node nodeTemp = cari.firstChild;
+                    for (int i = 0; i < ke; i++)
+                    {
+                        nodeTemp = nodeTemp.next;
+                    }
+                    nodeTemp.next = cari.lastChild;
+                }
                 if (cari.firstChild != null)
                 {
                     //MessageBox.Show(cari.key + " first");
@@ -199,6 +211,7 @@ namespace Prototype_SDL
                     //MessageBox.Show(cari.key + " next");
                     findinHeap(cari.next, prev);
                 }
+
             }
             return false;
         }
@@ -277,6 +290,7 @@ namespace Prototype_SDL
         {
             if (x.key <= y.key)
             {
+                kiri = true;
                 x.addSubtree(y);
                 return x;
             }
