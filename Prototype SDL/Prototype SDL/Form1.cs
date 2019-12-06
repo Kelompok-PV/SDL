@@ -89,45 +89,6 @@ namespace Prototype_SDL
                     } 
                 }
             }
-            //if (firstRoot.order >1)
-            //{
-            //    int ctr = 0;
-            //    for (int i = 0; i < firstRoot.order; i++)
-            //    {
-            //        findHeap = false;
-            //        findinHeap(firstRoot, firstRoot.prev);
-            //        if (findHeap == true)
-            //        {
-            //            ctr++;
-            //        }
-            //        //if (findHeap == true)
-            //        //{
-            //        //    if (firstRoot.prev != null)
-            //        //    {
-            //        //        findHeap = false;
-            //        //        Node prev = firstRoot.prev;
-            //        //        findinHeap(firstRoot, prev);
-            //        //        if (prev.prev != null)
-            //        //        {
-            //        //            firstRoot.prev = prev.prev;
-            //        //        }
-            //        //        else
-            //        //        {
-            //        //            firstRoot.prev = null;
-            //        //        }
-            //        //    }
-            //        //}
-            //    }
-            //    if (ctr == firstRoot.order)
-            //    {
-            //        firstRoot.prev = null;
-            //    }
-            //}
-            //if (simpan != null)
-            //{
-            //    firstRoot.prev = null;
-            //}
-            //MessageBox.Show(firstRoot.key+"");
             if (firstRoot.prev != null)
             {
                 findHeap = false;
@@ -183,19 +144,36 @@ namespace Prototype_SDL
 
                 if (cari.parent == null && cari.order >= 2&&kiri==true)
                 {
-                    int ke = cari.order - 2;
-                    Node nodeTemp = cari.firstChild;
+                    Node terakhir = cari;
+                    while (terakhir.next != null)
+                    {
+                        terakhir = terakhir.next;
+                    }
+                    int ke = terakhir.order - 2;
+                    Node nodeTemp = cari.lastChild;
+                    for (int i = 0; i < ke; i++)
+                    {
+                        nodeTemp = nodeTemp.prev;
+                    }
+                    nodeTemp.prev = cari.firstChild;
+                    cari.firstChild.next = nodeTemp;
+
+
+                    nodeTemp = cari.firstChild;
                     for (int i = 0; i < ke; i++)
                     {
                         nodeTemp = nodeTemp.next;
                     }
                     nodeTemp.next = cari.lastChild;
+                    cari.lastChild.prev = nodeTemp;
                 }
+
                 if (cari.firstChild != null)
                 {
                     //MessageBox.Show(cari.key + " first");
                     findinHeap(cari.firstChild, prev);
                 }
+
                 if (cari.lastChild != null)
                 {
                     //MessageBox.Show(cari.key + " last");
@@ -206,6 +184,7 @@ namespace Prototype_SDL
                 {
                     cari.next = null;
                 }
+
                 if (cari.next !=  null && cari.parent != null)
                 {
                     //MessageBox.Show(cari.key + " next");
@@ -469,10 +448,6 @@ namespace Prototype_SDL
         {
             extractMin(ref root);
             binomialTree.root = root;
-            if (root != null)
-            {
-                printConsole(root.key);
-            }
             treePanel.Invalidate();
         }
 
@@ -539,6 +514,7 @@ namespace Prototype_SDL
             if (simpan != null)
             {
                 decreaseKey(simpan, angka2);
+                treePanel.Invalidate();
             }
             else
             {
