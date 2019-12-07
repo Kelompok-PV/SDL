@@ -525,6 +525,7 @@ namespace Prototype_SDL
                 {
                     MessageBox.Show("harus angka");
                 }
+
                 if (angka1>=angka2)
                 {
                     if (cek)
@@ -546,6 +547,10 @@ namespace Prototype_SDL
                 {
                     MessageBox.Show("angka harus di ubah menjadi lebih kecil");
                 }
+            }
+            else
+            {
+                MessageBox.Show("ada yang kosong");
             }
         }
     }
