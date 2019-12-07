@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-
+using System.Threading.Tasks;
 namespace Prototype_SDL
 {
     class Node
@@ -114,6 +115,7 @@ namespace Prototype_SDL
                 cetak.x_parent = x;
                 cetak.y_parent = y;
             }
+            Thread.Sleep(200);
             gambar(cetak,x,y); //gambar node
             if (cetak.firstChild != null)
             {
