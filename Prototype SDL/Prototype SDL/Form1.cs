@@ -446,9 +446,12 @@ namespace Prototype_SDL
 
         private void button1_Click(object sender, EventArgs e)
         {
-            extractMin(ref root);
-            binomialTree.root = root;
-            treePanel.Invalidate();
+            if (root != null)
+            {
+                extractMin(ref root);
+                binomialTree.root = root;
+                treePanel.Invalidate();
+            }
         }
 
         private void decreaseKey(Node node, int newKey) { 
@@ -507,18 +510,42 @@ namespace Prototype_SDL
 
         private void button2_Click(object sender, EventArgs e)
         {
-            int angka1 = Convert.ToInt32(textBox1.Text);
-            int angka2 = Convert.ToInt32(textBox2.Text);
-            simpan = null;
-            find(root, angka1);
-            if (simpan != null)
+            if (textBox1.Text!=""&&textBox2.Text!="")
             {
-                decreaseKey(simpan, angka2);
-                treePanel.Invalidate();
-            }
-            else
-            {
-                MessageBox.Show("Key yang di Decrease tidak ada");
+                bool cek = false;
+                int angka1 = -9999999;
+                int angka2 = -9999999;
+                try
+                {
+                    angka1 = Convert.ToInt32(textBox1.Text);
+                    angka2 = Convert.ToInt32(textBox2.Text);
+                    cek = true;
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("harus angka");
+                }
+                if (angka1>=angka2)
+                {
+                    if (cek)
+                    {
+                        simpan = null;
+                        find(root, angka1);
+                        if (simpan != null)
+                        {
+                            decreaseKey(simpan, angka2);
+                            treePanel.Invalidate();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Key yang di Decrease tidak ada");
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("angka harus di ubah menjadi lebih kecil");
+                }
             }
         }
     }
